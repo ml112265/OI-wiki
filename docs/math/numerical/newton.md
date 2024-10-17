@@ -43,10 +43,9 @@ $$
 ### 实现
 
 === "C++"
-
     ```cpp
     double sqrt_newton(double n) {
-      const double eps = 1E-15;
+      constexpr static double eps = 1E-15;
       double x = 1;
       while (true) {
         double nx = (x + n / x) / 2;
@@ -58,7 +57,6 @@ $$
     ```
 
 === "Python"
-
     ```python
     def sqrt_newton(n):
         eps = 1e-15
@@ -78,7 +76,6 @@ $$
 ### 实现
 
 === "C++"
-
     ```cpp
     int isqrt_newton(int n) {
       int x = 1;
@@ -94,7 +91,6 @@ $$
     ```
 
 === "Python"
-
     ```python
     def isqrt_newton(n):
         x = 1

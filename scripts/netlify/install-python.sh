@@ -36,6 +36,8 @@ APT_PREFIX_PATHS=(
 
 for DIR in "${APT_PREFIX_MAKE_DIRS[@]}"; do mkdir -p "$APT_PREFIX$DIR"; done
 for DIR in "${APT_PREFIX_COPY_DIRS[@]}"; do cp -r "$DIR/." "$APT_PREFIX$DIR/" || true; done
+cat /etc/apt/sources.list | grep 'ubuntu\.com' > "$APT_PREFIX/etc/apt/sources.list"
+rm -rf "$APT_PREFIX/etc/apt/sources.list.d"/*
 
 # Download packages from PPA deadsnakes/ppa
 UBUNTU_CODENAME="$(source /etc/os-release && echo "$UBUNTU_CODENAME")"
@@ -51,4 +53,4 @@ for LIBPATH in "${APT_PREFIX_LD_LIBRARY_PATHS[@]}"; do export LD_LIBRARY_PATH="$
 for BINPATH in "${APT_PREFIX_PATHS[@]}"; do export PATH="$PATH:$APT_PREFIX$BINPATH"; done
 
 # Install Pipenv
-curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | "python$PYTHON_VERSION"
+pip install pipenv

@@ -8,9 +8,9 @@ ST4 与 ST3 的重要差别会有额外补充，在介绍中如果提及某项�
 
 ## 安装
 
-直接前往 [Sublime Text 3 官网](https://www.sublimetext.com/3) 下载即可（[中文官网](http://www.sublimetext.cn/) 已经很久没有更新，另外还有一个仿冒的网站）。
+ST4 的安装方法参见 [Sublime Text 4 的下载页面](https://www.sublimetext.com/download)。
 
-ST 的安装包并不会创建桌面快捷方式，需要自己手动创建。
+ST3 的安装方法参见 [Sublime Text 3 的下载页面](https://www.sublimetext.com/3)。
 
 ???+ note "提示购买"
     ST 是收费软件，但有一个无限期的试用，试用并不会带来功能上的缺失，但会不时弹出弹窗提示激活。
@@ -42,7 +42,7 @@ ST 并不支持中文，如需中文需要安装汉化插件。
 
 ![](./images/sublime3-1.png)
 
-输入 `Chinese` 选择 ChineseLocalizationgs 并回车，等待安装完毕，完成后界面会自动切换为中文（如是 ST4，因为汉化插件未更新，会少一些新增的菜单项，但一般对编辑无影响）。
+输入 `Chinese` 选择 ChineseLocalizations 并回车，等待安装完毕，完成后界面会自动切换为中文（如是 ST4，因为汉化插件未更新，会少一些新增的菜单项，但一般对编辑无影响）。
 
 ### 调整字体
 
@@ -422,14 +422,14 @@ Windows 环境下需要将 g++ 所在目录添加到环境变量中，并重启 
 
 ST 默认的编译选项为 `g++ "${file}" -o "${file_path}/${file_base_name}"`，如果要修改编译选项，可以新建一个编译系统。
 
-进入 `系统->编译系统->新建编译系统…` 然后在大括号中间输入：
+进入 `工具->编译系统->新建编译系统…` 然后在大括号中间输入：
 
 ```JSON
-//编译选项可以自己调整
-"cmd": ["cmd","/c","g++","-Wall","${file}","-o","${file_path}/${file_base_name}"
-	,"&&","cmd","/c","${file_path}/${file_base_name}"],  //这部分为运行
+// 编译选项可以自己调整
+// 编译并运行
+"shell_cmd": "g++ -Wall \"${file}\" -o \"${file_path}/${file_base_name}.exe\" && \"${file_path}/${file_base_name}.exe\"",
 
-//这一行可以让ST3图形化显示报错，如果习惯了看g++返回的信息可以去掉
+// 这一行可以让ST3图形化显示报错，如果习惯了看g++返回的信息可以去掉
 "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 ```
 

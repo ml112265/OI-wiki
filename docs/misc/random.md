@@ -29,7 +29,7 @@
 
 同一程序使用相同的 `seed` 两次运行，在同一机器、同一编译器下，随机出的结果将会是相同的。
 
-有一个选择是使用当前系统时间来作为随机种子：`srand(time(0))`。
+有一个选择是使用当前系统时间来作为随机种子：`srand(time(nullptr))`。
 
 ??? warning
     在 `Windows` 系统下 `rand()` 返回值的取值范围为 $\left[0,2^{15}\right)$（即 `RAND_MAX` 等于 $2^{15}-1$），当需要生成的数不小于 $2^{15}$ 时建议使用 `(rand() << 15 | rand())` 来生成更大的随机数。
@@ -68,7 +68,7 @@
     using namespace std;
     
     int main() {
-      mt19937 myrand(time(0));
+      mt19937 myrand(time(nullptr));
       cout << myrand() << endl;
       return 0;
     }
@@ -126,7 +126,7 @@ GCC[^note1]实现的 `shuffle` 符合 C++ 标准的要求，即在所有可能�
 int a[100];
 
 int main() {
-  srand(time(0));
+  srand(time(nullptr));
   int n = rand() % 99 + 1;
   for (int i = 1; i <= n; i++) a[i] = i;
   std::cout << n << '\n';
@@ -150,7 +150,7 @@ int main() {
 int a[100];
 
 int main() {
-  std::mt19937 rng(time(0));
+  std::mt19937 rng(time(nullptr));
   int n = rng() % 99 + 1;
   for (int i = 1; i <= n; i++) a[i] = i;
   std::cout << n << '\n';
@@ -233,30 +233,7 @@ int main() {
 
 这里介绍的是要求生成的随机数按照一定的概率出现，如等概率，[伯努利分布](https://en.wikipedia.org/wiki/Bernoulli_distribution)，[二项分布](https://en.wikipedia.org/wiki/Binomial_distribution)，[几何分布](https://en.wikipedia.org/wiki/Geometric_distribution)，[标准正态（高斯）分布](https://en.wikipedia.org/wiki/Normal_distribution)。
 
-类名请参照下表，本文仅以等概率整数作为示例，其余实现请替换类名。
-
-| 类名                                | 注释                  |
-| --------------------------------- | ------------------- |
-| uniform\_int\_distribution        | 产生在一个范围上均匀分布的整数值    |
-| uniform\_real\_distribution       | 产生在一个范围上均匀分布的实数值    |
-| bernoulli\_distribution           | 产生伯努利分布上的布尔值。       |
-| binomial\_distribution            | 产生二项分布上的整数值。        |
-| negative\_binomial\_distribution  | 产生负二项分布上的整数值。       |
-| geometric\_distribution           | 产生几何分布上的整数值。        |
-| poisson\_distribution             | 产生泊松分布上的整数值。        |
-| exponential\_distribution         | 产生指数分布上的实数值。        |
-| gamma\_distribution               | 产生 $\gamma$ 分布上的实数值 |
-| weibull\_distribution             | 产生威布尔分布上的实数值。       |
-| extreme\_value\_distribution      | 产生极值分布上的实数值。        |
-| normal\_distribution              | 产生标准正态（高斯）分布上的实数值。  |
-| lognormal\_distribution           | 产生对数正态分布上的实数值。      |
-| chi\_squared\_distribution        | 产生 $x^2$ 分布上的实数值。   |
-| cauchy\_distribution              | 产生柯西分布上的实数值。        |
-| fisher\_f\_distribution           | 产生费舍尔 F 分布上的实数值。    |
-| student\_t\_distribution          | 产生学生 t 分布上的实数值。     |
-| discrete\_distribution            | 产生离散分布上的随机整数。       |
-| piecewise\_constant\_distribution | 产生分布在常子区间上的实数值。     |
-| piecewise\_linear\_distribution   | 产生分布在定义的子区间上的实数值。   |
+具体类名请参见 [伪随机数生成——随机数分布](https://zh.cppreference.com/w/cpp/numeric/random#.E9.9A.8F.E6.9C.BA.E6.95.B0.E5.88.86.E5.B8.83) 的列表。
 
 #### 实现
 
@@ -308,7 +285,8 @@ $$
         this->P = P;
       }
     
-      int next() { return x = (A * x + B) % P; }  // 生成随机序列的下一个随机数
+      // 生成随机序列的下一个随机数
+      int next() { return x = (A * x + B) % P; }
     };
     
     myrand rnd(3, 5, 97);  // 初始化一个随机数生成器

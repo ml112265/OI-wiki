@@ -1,4 +1,4 @@
-author: Xeonacid, NachtgeistW, 2014CAIS01, sshwy, Chrogeek, Menci
+author: Xeonacid, NachtgeistW, 2014CAIS01, sshwy, Chrogeek, Menci, yzy-1
 
 本页面主要介绍部分评测工具/OJ 的 spj 编写方法。
 
@@ -26,11 +26,13 @@ Testlib 是一个 C++ 的库，用于辅助出题人使用 C++ 编写算法竞�
 
 可以使用 Testlib 作为 spj 的 评测工具/OJ：LibreOJ ([Lyrio](https://github.com/lyrio-dev))、Lemon、牛客网等。
 
-SYZOJ 2 所需的修改版 Testlib 托管于 [pastebin](https://pastebin.com/3GANXMG7)[^1]。
+SYZOJ 2 所需的修改版 Testlib 托管于 [pastebin](https://pastebin.com/3GANXMG7)[^1]，但此修改版并未修改交互模式。[syzoj/testlib](https://github.com/syzoj/testlib) 处托管了一份可以在 SYZOJ 2 上使用交互模式的 Testlib。
 
 Lemon 所需的修改版 Testlib 托管于 [GitHub - GitPinkRabbit/Testlib-for-Lemons](https://github.com/GitPinkRabbit/Testlib-for-Lemons)。注意此版本 Testlib 注册 checker 时应使用 `registerLemonChecker()`，而非 `registerTestlibCmd()`。此版本继承自 [matthew99 的旧版](https://paste.ubuntu.com/p/JsTspHHnmB/)，添加了一些 Testlib 的新功能。
 
 DOMJudge 所需的修改版 Testlib 托管于 [cn-xcpc-tools/testlib-for-domjudge](https://github.com/cn-xcpc-tools/testlib-for-domjudge)。此版本 Testlib 同时可作为 Special Judge 的 checker 和交互题的 interactor。
+
+Arbiter 所需的修改版 Testlib 托管于 [testlib-for-arbiter](https://github.com/HeRaNO/ChickenRibs/tree/master/testlib-for-arbiter)。
 
 其他评测工具/OJ 大部分需要按照其 spj 编写格式修改 Testlib，并将 testlib.h 与 spj 一同上传；或将 testlib.h 置于 include 目录。
 
@@ -263,10 +265,12 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-## LibreOJ (SYZOJ 2)
+## SYZOJ 2
 
 ???+ note
-    LibreOJ (SYZOJ 2) 有现成的修改版 [Testlib](#testlib)，建议使用 Testlib。
+    SYZOJ 2 有现成的修改版 [Testlib](#testlib)，建议使用 Testlib。
+
+    LibreOJ 的最新版本已不再基于 SYZOJ，而是基于 [Lyrio](https://github.com/lyrio-dev/lyrio)。Lyrio 支持使用原版 Testlib 编写评测器，这也是更加通用且推荐的做法。
 
 ```cpp
 #include <cmath>
@@ -281,7 +285,7 @@ int main(int argc, char* argv[]) {
    * stdout：输出最终得分 (0 ~ 100)
    * stderr：输出错误报告
    */
-  FILE* fin = fopen("in", "r");
+  FILE* fin = fopen("input", "r");
   FILE* fout = fopen("user_out", "r");
   FILE* fstd = fopen("answer", "r");
   FILE* fcode = fopen("code", "r");
