@@ -100,11 +100,11 @@ $$
 
 ### 析合树的构造
 
-前面讲了这么多零零散散的东西，现在就来具体地讲如何构造析合树。LCA 大佬的线性构造算法我是没看懂的，今天就讲一下比较好懂的 $O(n\log n)$ 的算法。
+对于具体构造析合树，LCA 提供了一种线性构造算法[^ref1]，下面给出一种比较好懂的 $O(n\log n)$ 算法。
 
 #### 增量法
 
-我们考虑增量法。用一个栈维护前 $i-1$ 个元素构成的析合森林。在这里我需要 **着重强调**，析合森林的意思是，在任何时侯，栈中结点要么是析点要么是合点。现在考虑当前结点 $P_i$。
+我们考虑增量法。用一个栈维护前 $i-1$ 个元素构成的析合森林。在这里需要 **着重强调**，析合森林的意思是，在任何时侯，栈中结点要么是析点要么是合点。现在考虑当前结点 $P_i$。
 
 1.  我们先判断它能否成为栈顶结点的儿子，如果能就变成栈顶的儿子，然后把栈顶取出，作为当前结点。重复上述过程直到栈空或者不能成为栈顶结点的儿子。
 2.  如果不能成为栈顶的儿子，就看能不能把栈顶的若干个连续的结点都合并成一个结点（判断能否合并的方法在后面），把合并后的点，作为当前结点。
@@ -167,13 +167,13 @@ $$
 
 ### 实现
 
-最后放一个实现的代码供参考。代码转自 [大米饼的博客](https://www.cnblogs.com/Paul-Guderian/p/11020708.html)，被我加了一些注释。
+最后放一个实现的代码供参考。代码转自 [大米饼的博客](https://www.cnblogs.com/Paul-Guderian/p/11020708.html)，添加了一些注释。
 
 ```cpp
-#include <bits/stdc++.h>
-#define rg register
+#include <algorithm>
+#include <cstdio>
 using namespace std;
-const int N = 200010;
+constexpr int N = 200010;
 
 int n, m, a[N], st1[N], st2[N], tp1, tp2, rt;
 int L[N], R[N], M[N], id[N], cnt, typ[N], bin[20], st[N], tp;
@@ -266,7 +266,7 @@ struct Edge {
 } E[N << 1];
 
 void add(int u, int v) {  // 树结构加边
-  E[o] = (Edge){v, hd[u]};
+  E[o] = Edge{v, hd[u]};
   hd[u] = o++;
 }
 
@@ -352,6 +352,7 @@ void build() {
   rt = st[1];  // 栈中最后剩下的点是根结点
 }
 
+// 分 lca 为析或和，这里把叶子看成析的
 void query(int l, int r) {
   int x = id[l], y = id[r];
   int z = lca(x, y);
@@ -362,7 +363,7 @@ void query(int l, int r) {
   else
     l = L[z], r = R[z];
   printf("%d %d\n", l, r);
-}  // 分 lca 为析或和，这里把叶子看成析的
+}
 
 int main() {
   scanf("%d", &n);
@@ -383,8 +384,8 @@ int main() {
 // 析合树
 ```
 
-## 参考文献
-
-刘承奥。简单的连续段数据结构。WC2019 营员交流。
+## 参考文献与链接
 
 [大米饼的博客 -【学习笔记】析合树](https://www.cnblogs.com/Paul-Guderian/p/11020708.html)
+
+[^ref1]: 刘承奥。简单的连续段数据结构。WC2019 营员交流。

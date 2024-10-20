@@ -6,113 +6,11 @@ CLion 是一款由 JetBrains 公司开发的功能丰富且强大的跨平台 C/
 
 ## 官方教程
 
-在官方网站中给出了 [学习 Clion](https://www.jetbrains.com/clion/learn/) 的教程。
+在官方网站中给出了 [学习 CLion](https://www.jetbrains.com/clion/learn/) 的教程。
 
 ## 安装
 
-### 方法一：直接安装
-
-#### Windows
-
-官网下载 [CLion 安装程序](https://www.jetbrains.com/clion/download/#section=windows) 安装即可
-
-#### Linux
-
-*请将下文所给出命令中的 `<version>` 替换成您所希望安装的 CLion 版本，例如 `2022.2.3`*
-
-##### Step 1 下载官方提供的 tar 包
-
-```bash
-wget https://download-cdn.jetbrains.com/cpp/CLion-<version>.tar.gz
-```
-
-##### Step 2 解压 tar 包
-
-```bash
-tar -xzvf CLion-<version>.tar.gz
-```
-
-##### Step 3 安装至 `~/.local/share` 文件夹
-
-```bash
-mkdir -p ~/.local/share/JetBrains
-cp -r clion-<version> ~/.local/share/JetBrains
-```
-
-##### Step 4 在 `~/.local/bin` 中建立软链接（便于在 terminal 中直接启动）
-
-```bash
-ln -s ~/.local/share/JetBrains/clion-<version>/bin/clion.sh ~/.local/bin/clion
-```
-
-##### Step 5 添加桌面环境启动文件（便于在桌面环境 Application Menu 中直接启动）
-
-```bash
-vim ~/.local/share/applications/clion.desktop
-```
-
-在文件中添加如下内容
-
-```ini
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=CLion
-Icon=${HOME}/.local/JetBrains/clion-<version>/bin/clion.png
-Exec=${HOME}/.local/JetBrains/clion-<version>/bin/clion.sh %f
-Comment=A cross-platform IDE for C and C++
-Categories=Development;IDE;
-Terminal=false
-StartupWMClass=jetbrains-clion
-StartupNotify=true
-```
-
-### 方法二：Toolbox 安装 (Windows/Linux/MacOS)
-
-下载并安装 [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)
-
-![JetBrains Toolbox](./images/clion-jetbrains-toolbox.png)
-
-通过该工具可以安装 JetBrains 公司开发的 IDE 产品，并且可以快速访问并打开您通过 JetBrains 旗下 IDE 创建的工程和项目，以及接收软件升级信息。
-
-### 方法三：通过 Snap 安装 (Linux)
-
-#### Step 1 安装 Snap
-
-##### Debian/Ubuntu 及其衍生发行版
-
-注：Ubuntu Desktop 16.04 以上版本均自带 snap
-
-```bash
-sudo apt update
-sudo apt install snapd
-```
-
-##### Arch Linux 及其衍生发行版
-
-具体细节请参考 [官方教程](https://snapcraft.io/docs/installing-snap-on-arch-linux)
-
-```bash
-git clone https://aur.archlinux.org/snapd.git
-cd snapd && makepkg -si
-sudo systemctl enable --now snapd.socket
-sudo ln -s /var/lib/snapd/snap /snap
-```
-
-##### Fedora/RHEL/CentOS/Rocky Linux
-
-```bash
-sudo dnf upgrade --refresh -y
-sudo dnf install fuse squashfuse snapd -y
-sudo systemctl enable snapd --now
-sudo ln -s /var/lib/snapd/snap /snap
-```
-
-#### Step 2 安装 CLion
-
-```bash
-sudo snap install clion --classic
-```
+参见 [Download CLion](https://www.jetbrains.com/clion/download/)。
 
 ## 配置
 
@@ -122,7 +20,9 @@ CLion 默认不带编译器，构建工具和调试工具，需要手动进行�
 
 #### Windows
 
-（待补充）
+参见 [Tutorial: Configure CLion on Windows | CLion Documentation](https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-windows.html)
+
+值得一提的是 CLion 的 Windows 版本中自带了 MinGW，所以可以不用额外安装 MinGW 工具链。
 
 #### Linux
 
@@ -150,9 +50,9 @@ sudo dnf install gcc g++ gdb # compiler and debugger
 sudo dnf install clang clang++ llvm lldb # you can also choose to use clang toolchain
 ```
 
-#### MacOS
+#### macOS
 
-（待补充）
+参见 [Tutorial: Configure CLion on macOS | CLion Documentation](https://www.jetbrains.com/help/clion/quick-tutorial-on-configuring-clion-on-macos.html)
 
 ### 工具链设置
 
@@ -162,11 +62,25 @@ sudo dnf install clang clang++ llvm lldb # you can also choose to use clang tool
 
 ![Config Toolchains](./images/clion-toolchain.png)
 
-### CMake
+### 编译、运行和调试
+
+虽然 CLion 诞生之初是面向多文件的复杂 C/C++ 项目诞生的，早些时候的 CLion 默认使用 [CMake](https://cmake.org/) 作为构建工具，但是自 CLion 2022.3 版本起，CLion 已经支持 [C, C++ 单文件运行](https://www.jetbrains.com/help/clion/run-single-file.html)。
+
+有多种方式来运行一个 C++ 程序，一个简单的流程如下：
+
+1.  创建一个 C/C++ 项目：`New -> Project -> C++ Executable`，选择合适的地址和语言标准版本，点击 `Create`。
+2.  打开项目，此时的项目目录下应当存在一个 `cmake-build-debug` 目录、一个 `CMakeLists.txt` 文件和一个 `main.cpp` 文件。因为我们不需要使用 CMake 来管理项目，因此我们可以删去 `CMakeLists.txt` 文件和 `cmake-build-debug` 目录及其内所有文件。
+3.  点击打开 `main.cpp` 文件，并在编辑区右键单击，可以看到 `Run 'main.cpp'` 选项。选择此选项后，CLion 可以自动创建一个运行配置并运行程序。
+
+![C++ Single File Execution](./images/clion-single-file-execution.png)
+
+如需调试程序，可以编辑区打好断点，在编辑区右键单击，选择 `Debug 'main.cpp'` 选项。
+
+### 通过 CMake 编译、运行和调试
 
 #### 设置
 
-CLion 默认使用 [CMake](https://cmake.org/) 作为构建工具，关于 CMake 的设置可以在 `Build, Execution, Deployment`>`Toolchains`>`CMake` 中修改。
+CLion 也可使用 [CMake](https://cmake.org/) 作为构建工具，关于 CMake 的设置可以在 `Build, Execution, Deployment -> Toolchains -> CMake` 中修改。
 
 ![CMake Settings](./images/clion-cmake.png)
 

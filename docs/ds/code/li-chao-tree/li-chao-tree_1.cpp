@@ -1,12 +1,11 @@
 #include <iostream>
-#include <string>
-#define MOD1 39989
-#define MOD2 1000000000
-#define MAXT 40000
+constexpr int MOD1 = 39989;
+constexpr int MOD2 = 1000000000;
+constexpr int MAXT = 40000;
 using namespace std;
-typedef pair<double, int> pdi;
+using pdi = pair<double, int>;
 
-const double eps = 1e-9;
+constexpr double eps = 1e-9;
 
 int cmp(double x, double y) {
   if (x - y > eps) return 1;
@@ -33,7 +32,8 @@ void add(int x0, int y0, int x1, int y1) {
 
 void upd(int root, int cl, int cr, int u) {  // 对线段完全覆盖到的区间进行修改
   int &v = s[root], mid = (cl + cr) >> 1;
-  if (cmp(calc(u, mid), calc(v, mid)) == 1) swap(u, v);
+  int bmid = cmp(calc(u, mid), calc(v, mid));
+  if (bmid == 1 || (!bmid && u < v)) swap(u, v);
   int bl = cmp(calc(u, cl), calc(v, cl)), br = cmp(calc(u, cr), calc(v, cr));
   if (bl == 1 || (!bl && u < v)) upd(root << 1, cl, mid, u);
   if (br == 1 || (!br && u < v)) upd(root << 1 | 1, mid + 1, cr, u);
