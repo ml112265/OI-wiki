@@ -1,4 +1,4 @@
-在组合数学中，图论计数（Graph Enumeration）是研究满足特定性质的图的计数问题的分支。[生成函数](../poly/intro.md)、[波利亚计数定理](../permutation-group.md#p%C3%B3lya-%E5%AE%9A%E7%90%86) 与 [符号化方法](../poly/symbolic-method.md#%E9%9B%86%E5%90%88%E7%9A%84-cycle-%E6%9E%84%E9%80%A0) 和 [OEIS](https://oeis.org/) 是解决这类问题时最重要的数学工具。图论计数可分为有标号和无标号两大类问题，大多数情况下[^1]有标号版本的问题都比其对应的无标号问题更加简单，因此我们将先考察有标号问题的计数。
+在组合数学中，图论计数（Graph Enumeration）是研究满足特定性质的图的计数问题的分支。[生成函数](../poly/intro.md)、[波利亚计数定理](./polya.md) 与 [符号化方法](../poly/symbolic-method.md#%E9%9B%86%E5%90%88%E7%9A%84-cycle-%E6%9E%84%E9%80%A0) 和 [OEIS](https://oeis.org/) 是解决这类问题时最重要的数学工具。图论计数可分为有标号和无标号两大类问题，大多数情况下[^1]有标号版本的问题都比其对应的无标号问题更加简单，因此我们将先考察有标号问题的计数。
 
 [^1]: 也许无标号二叉树是一个反例，在结构简单的情况下，对应的置换群是恒等群（Identity Group），此时有标号版本可以直接通过乘以 $n!$ 得到。
 
@@ -81,10 +81,10 @@ $$
 
 ???+ note " 例题 [「SPOJ KPGRAPHS」Counting Graphs](http://www.spoj.com/problems/KPGRAPHS/)"
     题目大意：求有 $n$ 个结点的分别满足下列性质的有标号图的方案数（$n \leq 1000$）。
-
-    - 连通图 [A001187](https://oeis.org/A001187)。
-    - 欧拉图 [A033678](https://oeis.org/A033678)。 
-    - 二分图 [A047864](https://oeis.org/A047864)。
+    
+    -   连通图 [A001187](https://oeis.org/A001187)。
+    -   欧拉图 [A033678](https://oeis.org/A033678)。
+    -   二分图 [A047864](https://oeis.org/A047864)。
 
 本题限制代码长度，因而无法直接使用多项式模板，但生成函数依然可以帮助我们进行分析。
 
@@ -155,7 +155,7 @@ c_{n, i} &= \sum_{i=0}{n-1} \binom{n-1}{i-1} c_{n, 1}c_{n-i,k-1}
 \end{align}
 $$
 
-不难得到 $b_n$ 的递推关系，复杂度 $O(n^3)$，进一步使用冗斥原理，可以优化到 $O(n^2)$ 通过本题。
+不难得到 $b_n$ 的递推关系，复杂度 $O(n^3)$，进一步使用容斥原理，可以优化到 $O(n^2)$ 通过本题。
 
 #### 方法二：连通化递推
 
@@ -205,7 +205,7 @@ $$
 
 ??? 参考代码
     ```cpp
-    --8<-- "docs/math/combinatorics/code/graph-enumeration/graph-enumeration_1.cpp"
+    --8<-- "docs/math/code/combinatorics/graph-enumeration/graph-enumeration_1.cpp"
     ```
 
 ### 习题
@@ -251,11 +251,11 @@ $$
 
 ???+ note " 例题 [「SPOJ PT07D」Let us count 1 2 3](https://www.spoj.com/problems/PT07D/)"
     题目大意：求有 n 个结点的分别满足下列性质的树的方案数。
-
-    - 有标号有根树 [A000169](https://oeis.org/A000169)。
-    - 有标号无根树 [A000272](https://oeis.org/A000272)。
-    - 无标号有根树 [A000081](https://oeis.org/A000081)。
-    - 无标号无根树 [A000055](https://oeis.org/A000055)。
+    
+    -   有标号有根树 [A000169](https://oeis.org/A000169)。
+    -   有标号无根树 [A000272](https://oeis.org/A000272)。
+    -   无标号有根树 [A000081](https://oeis.org/A000081)。
+    -   无标号无根树 [A000055](https://oeis.org/A000055)。
 
 #### 有根树
 
@@ -331,7 +331,7 @@ $$
 
 ??? 参考代码
     ```cpp
-    --8<-- "docs/math/combinatorics/code/graph-enumeration/graph-enumeration_2.cpp"
+    --8<-- "docs/math/code/combinatorics/graph-enumeration/graph-enumeration_2.cpp"
     ```
 
 ## 习题
@@ -347,6 +347,7 @@ $$
 -   [AtCoder Beginner Contest 284 Ex. Count Unlabeled Graphs](https://atcoder.jp/contests/abc284/tasks/abc284_h)
 -   [Luogu P4708. 画画](https://www.luogu.com.cn/problem/P4708)
 -   [Luogu P7592. 数树（2021 CoE-II E）](https://www.luogu.com.cn/problem/P7592)
+-   [Luogu P5206. \[WC2019\] 数树](https://www.luogu.com.cn/problem/P5206)
 
 ## 参考资料与注释
 

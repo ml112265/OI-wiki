@@ -39,7 +39,7 @@ $$
 
 $$
 \sum_{i=0}^n\left\lfloor \frac{ai+b}{c} \right\rfloor
-=\sum_{i=0}^n\sum_{j=0}^{\left\lfloor \frac{ai+b}{c} \right\rfloor-1}1\\
+=\sum_{i=0}^n\sum_{j=0}^{\left\lfloor \frac{ai+b}{c} \right\rfloor-1}1
 $$
 
 现在多了一个变量 $j$，既然算 $i$ 的贡献不方便，我们就想办法算 $j$ 的贡献。因此想办法搞一个和 $j$ 有关的贡献式。这里有另一个家喻户晓的变换方法，笔者概括为限制转移。具体来说，在上面的和式中 $n$ 限制 $i$ 的上界，而 $i$ 限制 $j$ 的上界。为了搞 $j$，就先把 j 放到贡献的式子里，于是我们交换一下 $i,j$ 的求和算子，强制用 $n$ 限制 $j$ 的上界。
@@ -53,7 +53,7 @@ $$
 $$
 j<\left\lfloor \frac{ai+b}{c} \right\rfloor
 \iff j+1\leq \left\lfloor \frac{ai+b}{c} \right\rfloor
-\iff j+1\leq \frac{ai+b}{c}\\
+\iff j+1\leq \frac{ai+b}{c}
 $$
 
 然后可以做一些变换
@@ -105,7 +105,7 @@ g(a,b,c,n)
 =g(a\bmod c,b\bmod c,c,n)+\left\lfloor\frac{a}{c}\right\rfloor\frac{n(n+1)(2n+1)}{6}+\left\lfloor\frac{b}{c}\right\rfloor\frac{n(n+1)}{2}
 $$
 
-接下来考虑 $a<c,b<c$ 的情况，令 $m=\left\lfloor\frac{an+b}{c}\right\rfloor$。之后的过程我会写得很简略，因为方法和上文略同：
+接下来考虑 $a<c,b<c$ 的情况，令 $m=\left\lfloor\frac{an+b}{c}\right\rfloor$。之后的过程比较简略，因为方法和上文略同：
 
 $$
 \begin{aligned}
@@ -184,21 +184,21 @@ $$
 
 ??? note "[模板题代码实现](https://www.luogu.com.cn/problem/P5170)"
     ```cpp
-    #include <bits/stdc++.h>
-    #define int long long
+    #include <cstdio>
     using namespace std;
-    const int P = 998244353;
-    int i2 = 499122177, i6 = 166374059;
+    constexpr long long P = 998244353;
+    long long i2 = 499122177, i6 = 166374059;
     
-    struct data {
-      data() { f = g = h = 0; }
+    struct data_t {
+      data_t() { f = g = h = 0; }
     
-      int f, g, h;
+      long long f, g, h;
     };  // 三个函数打包
     
-    data calc(int n, int a, int b, int c) {
-      int ac = a / c, bc = b / c, m = (a * n + b) / c, n1 = n + 1, n21 = n * 2 + 1;
-      data d;
+    data_t calc(long long n, long long a, long long b, long long c) {
+      long long ac = a / c, bc = b / c, m = (a * n + b) / c, n1 = n + 1,
+                n21 = n * 2 + 1;
+      data_t d;
       if (a == 0) {  // 迭代到最底层
         d.f = bc * n1 % P;
         d.g = bc * n % P * n1 % P * i2 % P;
@@ -212,14 +212,14 @@ $$
               bc * bc % P * n1 % P + ac * bc % P * n % P * n1 % P;
         d.f %= P, d.g %= P, d.h %= P;
     
-        data e = calc(n, a % c, b % c, c);  // 迭代
+        data_t e = calc(n, a % c, b % c, c);  // 迭代
     
         d.h += e.h + 2 * bc % P * e.f % P + 2 * ac % P * e.g % P;
         d.g += e.g, d.f += e.f;
         d.f %= P, d.g %= P, d.h %= P;
         return d;
       }
-      data e = calc(m - 1, c, c - b - 1, a);
+      data_t e = calc(m - 1, c, c - b - 1, a);
       d.f = n * m % P - e.f, d.f = (d.f % P + P) % P;
       d.g = m * n % P * n1 % P - e.h - e.f, d.g = (d.g * i2 % P + P) % P;
       d.h = n * m % P * (m + 1) % P - 2 * e.g - 2 * e.f - d.f;
@@ -227,13 +227,13 @@ $$
       return d;
     }
     
-    int T, n, a, b, c;
+    long long T, n, a, b, c;
     
     signed main() {
       scanf("%lld", &T);
       while (T--) {
         scanf("%lld%lld%lld%lld", &n, &a, &b, &c);
-        data ans = calc(n, a, b, c);
+        data_t ans = calc(n, a, b, c);
         printf("%lld %lld %lld\n", ans.f, ans.h, ans.g);
       }
       return 0;

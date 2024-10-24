@@ -1,4 +1,4 @@
-author: abc1763613206, ksyx
+author: GoodCoder666, abc1763613206, ksyx
 
 ## 一些前置约定/定义
 
@@ -68,7 +68,7 @@ SAM 最简单、也最重要的性质是，它包含关于字符串 $s$ 的所�
 
 ## 在线性时间内构造
 
-在我们描述线性时间内构造 SAM 的算法之前，我们需要引入几个对理解构造过程非常重要的概念并对其进行简单证明。
+在我们描述线性时间内构造 SAM 的算法之前，我们需要引入几个对理解构造过程非常重要的概念，并对其性质进行简单证明。
 
 ### 结束位置 `endpos`
 
@@ -233,7 +233,7 @@ struct state {
 SAM 本身将会存储在一个 `state` 结构体数组中。我们记录当前自动机的大小 `sz` 和变量 `last`，当前整个字符串对应的状态。
 
 ```cpp
-const int MAXLEN = 100000;
+constexpr int MAXLEN = 100000;
 state st[MAXLEN * 2];
 int sz, last;
 ```
@@ -599,9 +599,9 @@ $$
 -   [SPOJ Longest Common Substring II](https://www.spoj.com/problems/LCS2/)
 -   [Codeforces 1037H Security](https://codeforces.com/problemset/problem/1037/H)
 -   [Codeforces 666E Forensic Examination](https://codeforces.com/problemset/problem/666/E)
--   [HDu4416 Good Article Good sentence](https://vjudge.net/problem/HDU-4416)
--   [HDu4436 str2int](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4398)
--   [HDu6583 Typewriter](https://vjudge.net/problem/HDU-6583)
+-   [HDU4416 Good Article Good sentence](https://acm.hdu.edu.cn/showproblem.php?pid=4416)
+-   [HDU4436 str2int](https://acm.hdu.edu.cn/showproblem.php?pid=4436)
+-   [HDU6583 Typewriter](https://acm.hdu.edu.cn/showproblem.php?pid=6583)
 -   [Codeforces 235C Cyclical Quest](https://codeforces.com/problemset/problem/235/C)
 -   [CTSC2012 熟悉的文章](https://www.luogu.com.cn/problem/P4022)
 -   [NOI2018 你的名字](https://uoj.ac/problem/395)
@@ -610,11 +610,8 @@ $$
 
 我们先给出与 SAM 有关的最初的一些文献：
 
--   A. Blumer, J. Blumer, A. Ehrenfeucht, D. Haussler, R. McConnell.**Linear
-    Size Finite Automata for the Set of All Subwords of a Word. An Outline of
-    Results**\[1983]
--   A. Blumer, J. Blumer, A. Ehrenfeucht, D. Haussler.**The Smallest Automaton
-    Recognizing the Subwords of a Text**\[1984]
+-   A. Blumer, J. Blumer, A. Ehrenfeucht, D. Haussler, R. McConnell.**Linear Size Finite Automata for the Set of All Subwords of a Word. An Outline of Results**\[1983]
+-   A. Blumer, J. Blumer, A. Ehrenfeucht, D. Haussler.**The Smallest Automaton Recognizing the Subwords of a Text**\[1984]
 -   Maxime Crochemore.**Optimal Factor Transducers**\[1985]
 -   Maxime Crochemore.**Transducers and Repetitions**\[1986]
 -   A. Nerode.**Linear automaton transformations**\[1958]

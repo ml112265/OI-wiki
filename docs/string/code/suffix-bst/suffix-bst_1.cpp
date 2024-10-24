@@ -1,17 +1,19 @@
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <iostream>
+#include <string>
 using namespace std;
 
-const int N = 1e6 + 5;
-const double INF = 1e18;
+constexpr int N = 1e6 + 5;
+constexpr double INF = 1e18;
 
 int n, m, sa[N];
-char t[N];
+string t;
 
 // SuffixBST(SGT Ver)
 
 // 顺序加入，查询时将询问串翻转
 // 以i开始的后缀，对应节点的编号为i
-const double alpha = 0.75;
+constexpr double alpha = 0.75;
 int root;
 int sz[N], L[N], R[N];
 double tag[N];
@@ -81,42 +83,6 @@ void insert(int& rt, int p, double lv, double rv) {
   if (!balance(rt)) rebuild(rt, lv, rv);
 }
 
-void remove(int& rt, int p, double lv, double rv) {
-  if (!rt) return;
-
-  if (rt == p) {
-    if (!L[rt] || !R[rt]) {
-      rt = (L[rt] | R[rt]);
-    } else {
-      // 找到rt的前驱来替换rt
-      int nrt = L[rt], fa = rt;
-      while (R[nrt]) {
-        fa = nrt;
-        sz[fa]--;
-        nrt = R[nrt];
-      }
-      if (fa == rt) {
-        R[nrt] = R[rt];
-      } else {
-        L[nrt] = L[rt];
-        R[nrt] = R[rt];
-        R[fa] = 0;
-      }
-      rt = nrt;
-      tag[rt] = (lv + rv) / 2;
-    }
-  } else {
-    double mv = (lv + rv) / 2;
-    if (cmp(p, rt))
-      remove(L[rt], p, lv, mv);
-    else
-      remove(R[rt], p, mv, rv);
-  }
-
-  push_up(rt);
-  if (!balance(rt)) rebuild(rt, lv, rv);
-}
-
 void inorder(int rt) {
   if (!rt) return;
   inorder(L[rt]);
@@ -125,8 +91,9 @@ void inorder(int rt) {
 }
 
 void solve(int Case) {
-  scanf("%s", t + 1);
-  n = strlen(t + 1);
+  cin >> t;
+  n = t.size();
+  t = " " + t;
 
   init();
   for (int i = n; i >= 1; --i) {
@@ -137,11 +104,12 @@ void solve(int Case) {
   m = 0;
   inorder(root);
 
-  for (int i = 1; i <= n; ++i) printf("%d ", sa[i]);
-  printf("\n");
+  for (int i = 1; i <= n; ++i) cout << sa[i] << ' ';
+  cout << '\n';
 }
 
 int main() {
+  cin.tie(nullptr)->sync_with_stdio(false);
   solve(1);
   return 0;
 }
